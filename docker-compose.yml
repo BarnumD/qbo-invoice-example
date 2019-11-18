@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  quickbooks-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - qb_authorization_request_url=https://appcenter.intuit.com/connect/oauth2
+      - qb_token_endpoint_url=https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer
+      - qb_client_id=insert_here
+      - qb_client_secret=insert_here
+      - qb_oauth_scope=com.intuit.quickbooks.accounting openid profile email phone address
+      - qb_oauth_redirect_uri=https://[publicly_available_url(ngrok.io)]/callback.php
+      - qb_realm_id=insert_here
+      - qb_base_url=Production
+    ports:
+      - "3002:80"
+    networks:
+      - overlay
+    # volumes:
+    #   - C:\git\Public\qbo-invoice-example:/app
+
+networks:
+  overlay:
